@@ -13,11 +13,11 @@ const limit = process.argv.slice(2)[1];
 pool
   .query(
     `
-    SELECT students.id as student_id, students.name as name, cohorts.name as cohort
-    FROM students
-    JOIN cohorts
-    ON cohorts.id = cohort_id
-    LIMIT ${limit};
+    SELECT teachers.name, COUNT(assistance_requests.*) as total_assistances
+    FROM teachers
+    JOIN assistance_requests ON teacher_id=teachers.id
+    WHERE name = 'Waylon Boehm'
+    GROUP BY teachers.name    
     `
   )
   .then((res) => {
